@@ -45,7 +45,9 @@ def wrap(draw, text, fnt, max_w):
 
 def pick(quotes, today=None):
     day = today or datetime.now(ZoneInfo("Africa/Windhoek")).date()
-    return quotes[day.toordinal() % len(quotes)], day
+    n = len(quotes)
+    stride = next(s for s in range(n // 3, n) if __import__("math").gcd(s, n) == 1)
+    return quotes[(day.toordinal() * stride) % n], day
 
 
 def render(quote, out):
